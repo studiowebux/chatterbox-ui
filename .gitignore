@@ -1,0 +1,4 @@
+output/
+references/*.wav
+.DS_Store
+.ropeproject/
