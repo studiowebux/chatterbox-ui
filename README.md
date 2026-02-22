@@ -1,5 +1,7 @@
 # Voice Synthesis API
 
+2026-02-22: Moved to https://github.com/studiowebux/ollama-webui
+
 ## Setup
 
 ```bash
