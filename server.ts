@@ -38,18 +38,20 @@ async function synthesizeVoice(
 
   let filename = output_filename ||
     `voice_${Date.now()}_${Math.random().toString(36).substr(2, 9)}.wav`;
-  
+
   // Ensure filename has .wav extension
-  if (filename && !filename.toLowerCase().endsWith('.wav')) {
-    filename = filename + '.wav';
+  if (filename && !filename.toLowerCase().endsWith(".wav")) {
+    filename = filename + ".wav";
   }
-  
+
   const outputPath = join(outputDir, filename);
   const referencePath = join("./references", `${voice}.wav`);
 
   // Use voice_synthesizer.py with all required parameters
-  const command = new Deno.Command("python3", {
+  const command = new Deno.Command("uv", {
     args: [
+      "run",
+      "python",
       "voice_synthesizer.py",
       "--text",
       text,

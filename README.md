@@ -2,17 +2,12 @@
 
 ## Setup
 
-1. Install the chatterbox TTS package:
 ```bash
-pip install chatterbox-tts
+uv sync
 ```
 
-2. Make sure you have the required dependencies:
-```bash
-pip install torch torchaudio
-```
+**Start the server:**
 
-3. Start the server:
 ```bash
 deno run -A server.ts
 ```

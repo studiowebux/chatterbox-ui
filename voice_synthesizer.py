@@ -1,5 +1,6 @@
 import argparse
 import sys
+import torch
 
 try:
     import torchaudio as ta
@@ -17,18 +18,28 @@ def main():
     parser.add_argument('--exageration', type=float, default=1.0, help='Exaggeration level (default: 1.0)')
     parser.add_argument('--cfg_weight', type=float, default=1.0, help='CFG weight (default: 1.0)')
     parser.add_argument('--output', required=True, help='Output audio file path')
-    
+
     args = parser.parse_args()
-    
-    model = ChatterboxTTS.from_pretrained(device="cuda")
-    
+
+    # Automatically detect the best available device
+    if torch.cuda.is_available():
+        device = "cuda"
+    elif torch.backends.mps.is_available():
+        device = "mps"
+    else:
+        device = "cpu"
+
+    print(f"Using device: {device}")
+
+    model = ChatterboxTTS.from_pretrained(device=device)
+
     wav = model.generate(
-        args.text, 
-        audio_prompt_path=args.reference, 
-        exaggeration=args.exageration, 
+        args.text,
+        audio_prompt_path=args.reference,
+        exaggeration=args.exageration,
         cfg_weight=args.cfg_weight
     )
-    
+
     ta.save(args.output, wav, model.sr)
     print(f"Audio saved to: {args.output}")
 
